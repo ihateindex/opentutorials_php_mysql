@@ -25,6 +25,8 @@
     <a href="create.php">create</a>
     <h2>Welcome</h2>
     Lorem ipsum dolor sit amet, consectetur adipisicing elit
+    <h2>Welcome</h2>
+    Lorem ipsum dolor sit amet, consectetur adipisicing elit
 </body>
 
 </html>

@@ -15,25 +15,15 @@
     );
 
     $update_link = '';
-    $delete_link = '';
-    $author = '';
     if(isset($_GET['id'])) {
         $filtered_id = mysqli_real_escape_string($conn, $_GET['id']);
-        $sql = "SELECT * FROM topic LEFT JOIN author ON topic.author_id = author.id WHERE topic.id={$filtered_id}";
+        $sql = "SELECT * FROM topic WHERE id={$filtered_id}";
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_array($result);
         $article['title'] = htmlspecialchars($row['title']);
         $article['description'] = htmlspecialchars($row['description']);
-        $article['name'] = htmlspecialchars($row['name']);
 
         $update_link = '<a href="update.php?id='.$_GET['id'].'">update</a>';
-        $delete_link = '
-            <form action="process_delete.php" method="post">
-                <input type="hidden" name="id" value="'.$_GET['id'].'">
-                <input type="submit" value="delete">
-            </form>
-         ';
-         $author = "<p>by {$article['name']}</p>";
     };
 ?>
 <!DOCTYPE html>
@@ -47,16 +37,15 @@
 
 <body>
     <h1><a href='index.php'>WEB</a></h1>
-    <p><a href="author.php">author</a></p>
     <ol>
         <?=$list?>
     </ol>
-    <a href="create.php">create</a>
-    <?=$update_link?>
-    <?=$delete_link?>
-    <h2><?=$article['title']?></h2>
-    <?=$article['description']?>
-    <?=$author?>
+    <form action="process_update.php" method="POST">
+        <input type="hidden" name="id" value="<?=$_GET['id']?>">
+        <p><input type="text" name="title" placeholder="제목" value="<?=$article['title']?>"></p>
+        <p><textarea name="description" placeholder="본문"><?=$article['description']?></textarea></p>
+        <p><input type="submit"></p>
+    </form>
 </body>
 
 </html>
